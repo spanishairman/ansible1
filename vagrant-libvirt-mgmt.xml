@@ -1,0 +1,14 @@
+<network ipv6='no'>
+  <name>vagrant-libvirt-mgmt</name>
+  <uuid>9f7515fb-3f42-45ec-8285-2c96f25a72a5</uuid>
+  <forward mode='nat'/>
+  <bridge name='virbr1' stp='on' delay='0'/>
+  <mac address='52:54:00:43:65:2b'/>
+  <ip address='192.168.121.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.121.31' end='192.168.121.254'/>
+      <host mac='52:54:00:27:28:83' name='Debian12' ip='192.168.121.10'/>
+    </dhcp>
+  </ip>
+</network>
+

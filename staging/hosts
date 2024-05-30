@@ -1,0 +1,2 @@
+[webserver]
+Debian12 ansible_host=192.168.121.10 ansible_port=22 ansible_private_key_file=/home/max/vagrant/vg3/.vagrant/machines/Debian12/libvirt/private_key
