@@ -127,6 +127,7 @@ virsh net-update vagrant-libvirt-mgmt add ip-dhcp-host "<host mac=52:54:00:27:28
   - адресация, 
   - mac-адрес сетевого интерфейса создаваемой виртуальной машины, именно он был указан для резервирования в файле [vagrant-libvirt-mgmt.xml](vagrant-libvirt-mgmt.xml),
   - ключ "lv.management_network_keep" со значением "true".
+
 Последний параметр указывает vagrant, что при уничтожении виртуальной машины, удалять сеть "vagrant-libvirt-mgmt" не нужно, 
 только если она не была создана в процессе разворачивания данной виртальной машины.
 #### Ansible
