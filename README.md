@@ -1,8 +1,31 @@
 ### Автоматизация администрирования. Ansible-1
 #### Подготовка окружения
 ##### Проблема с сетевыми интерфейсами
-Vagrant-libvirt при работе с виртуальными сетями использует первую сетевую карту виртуального хоста в качестве
-NAT-подключения для управления этим хостом. 
+В нашем примере используется гипервизор Qemu-KVM, библиотека Libvirt. В качестве хостовой системы - OpenSuse Leap 15.5.
+
+Для работы Vagrant с Libvirt установлен пакет vagrant-libvirt:
+```
+Сведения — пакет vagrant-libvirt:
+---------------------------------
+Репозиторий            : Основной репозиторий
+Имя                    : vagrant-libvirt
+Версия                 : 0.10.2-bp155.1.19
+Архитектура            : x86_64
+Поставщик              : openSUSE
+Размер после установки : 658,3 KiB
+Установлено            : Да
+Состояние              : актуален
+Пакет с исходным кодом : vagrant-libvirt-0.10.2-bp155.1.19.src
+Адрес источника        : https://github.com/vagrant-libvirt/vagrant-libvirt
+Заключение             : Провайдер Vagrant для libvirt
+Описание               : 
+
+    This is a Vagrant plugin that adds a Libvirt provider to Vagrant, allowing
+    Vagrant to control and provision machines via the Libvirt toolkit.
+```
+Образ операционной системы создём заранее, для этого установим [Debian Linux из официального образа netinst](https://www.debian.org/distrib/netinst)
+
+Vagrant-libvirt при работе с виртуальными сетями использует первую сетевую карту виртуального хоста в качестве NAT-подключения для управления этим хостом. 
 
 Можно добавить в файл Vagrantfile информацию о дополнительных сетевых интерфейсах, например так:
 ```
@@ -47,6 +70,7 @@ ERROR warden: Error occurred: no implicit conversion of String into Integer
 ```
 ##### Решение
 Для того, чтобы обойти возникшую проблему, будем использовать сеть управления в качестве основной и единственной.
+
 Заранее создадим новую сеть с именем vagrant-libvirt-mgmt. Для этого используем командный файл [vagrant-net-load.sh](vagrant-net-load.sh).
 ```
 #!/bin/bash
@@ -82,6 +106,7 @@ virsh net-update vagrant-libvirt-mgmt delete ip-dhcp-range "<range start='192.16
 virsh net-update vagrant-libvirt-mgmt add ip-dhcp-host "<host mac=52:54:00:27:28:84 name=Debian12-2 ip=192.168.121.11 />" --live --config
 ```
 В этом примере также изменяется диапазон адресов, исключённых из автоматической выдачи.
+
 Все изменения, вносимые таким образом, применяются "на лету" и не требуют перезапуска виртуальной сети.
 Теперь, после подготовки сетевой инфраструктуры, создадим [Vagrantfile](Vagrantfile).
 
